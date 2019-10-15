@@ -14,7 +14,7 @@ class SumTree:
     def __init__(self, capacity):
         self.capacity = capacity
         self.tree = np.zeros(2 * capacity - 1) # (capacity - 1) for parent nodes and (capacity) for leafs
-        self.data = np.zeros(capacity)
+        self.data = np.zeros(capacity, dtype=object)
 
     def add(self, element, priority):
         tree_idx = self.data_idx + self.capacity - 1
@@ -68,9 +68,9 @@ class PrioritizedMemory:
         self.memory.update(idx, priority)
 
     def sample(self, k):
-        batch = np.array((1, k), dtype=object)
-        indices = np.array((1, k))
-        probs = np.array((1, k))
+        batch = []
+        indices = []
+        probs = []
         segment = self.memory.total() / k
 
         for i in range(k):
@@ -79,15 +79,14 @@ class PrioritizedMemory:
 
             s = random.uniform(left, right)
             idx, priority, transition = self.memory.get(s)
-            indices[i] = idx
-            probs[i] = priority / self.memory.total()
-            batch[i] = transition
+            indices.append(idx)
+            probs.append(priority / self.memory.total())
+            batch.append(transition)
 
-        weights = np.power(self.n_transitions * probs, -self.beta)
+        weights = np.power(self.n_transitions * np.array(probs), -self.beta)
         weights /= weights.max()
 
         return indices, batch, weights
-
 
     def add(self, transition, td_error):
         priority = self._get_priority(td_error)
