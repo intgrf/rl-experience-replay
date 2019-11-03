@@ -67,7 +67,7 @@ class PrioritizedMemory:
         segment = p_sum / k
 
         for i in range(k):
-            left = segment * i* self.alpha
+            left = segment * i
             right = segment * (i + 1)
 
             s = random.uniform(left, right)
