@@ -4,7 +4,7 @@
 
 CartPole-v0                |  MountainCar-v0
 :-------------------------:|:-------------------------:
-![](results/PER_CartPole.jpg)|  ![](results/PER_MountainCar.jpg)
+![](results/PER_CartPole.jpg)|  ![](results/PER_MountainCar_1.jpg)
 
 **2. [Double DQN + HER](https://arxiv.org/abs/1707.01495): BitFlip, MountainCar-v0**
 
